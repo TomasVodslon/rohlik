@@ -1,4 +1,4 @@
-swagger: "2.0"
+swagger: "2.3.1"
 info:
   title: Demo pro Rohlik
   description: Ukol pro rohlik
@@ -10,12 +10,76 @@ paths:
     post:
       summary: Create new order
       description: Vytvori novou objednavku
+      responses:
+        '200':
+          description: Successful operation
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/User'
+    delete:
+      summary: Delete product
+      description: Smaze objednavku
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: integer
+      responses:
+          '200':
+            description: Successful operation
+  /payment:
+    post:
+      summary: Payment of the order
+      description: Posle platbu za objednavku
+      responses:
+        '200':
+          description: Successful operation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+  /product:
+    post:
+      summary: creation of the product
+      description: Vytvori novy product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+    delete:
+      summary: Delete product
+      description: Smaze product
+      responses:
+        '200':
+          description: Successful operation
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: integer
+
+#    /getAll:
+#      get:
+#        summary: Cancel order
+#        description: Smaze objednavku
+#          parameters:
+#            - name: id
+#              in: path
+#              description: Order ID
+#              required: true
+#              schema:
+#                type: integer
+#                format: int64
+#            responses:
+#              '200':
+#                description: Successful operation
 components:
   schemas:
     User:
@@ -28,3 +92,11 @@ components:
       required:
         - id
         - name
+    Payment:
+      properties:
+        id:
+          type: integer
+    Product:
+      properties:
+        id:
+          type: integer
