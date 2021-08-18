@@ -7,8 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="rohlik-db" />
-        <module name="rohlik-app" />
         <module name="rohlik-domain" />
+        <module name="rohlik-app" />
+        <module name="rohlik-service" />
       </profile>
     </annotationProcessing>
   </component>
@@ -18,6 +19,7 @@
       <module name="rohlik-app" options="-parameters" />
       <module name="rohlik-db" options="-parameters" />
       <module name="rohlik-domain" options="-parameters" />
+      <module name="rohlik-service" options="-parameters" />
     </option>
   </component>
 </project>

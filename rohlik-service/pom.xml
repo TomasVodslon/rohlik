@@ -3,14 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <dependencies>
-        <dependency>
-            <groupId>cz.root</groupId>
-            <artifactId>rohlik-domain</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
 
     <parent>
         <groupId>cz.root</groupId>
@@ -18,9 +10,20 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>cz.root</groupId>
-    <artifactId>rohlik-db</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>rohlik-service</artifactId>
 
-    
+    <dependencies>
+        <dependency>
+            <groupId>cz.root</groupId>
+            <artifactId>rohlik-domain</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>cz.root</groupId>
+            <artifactId>rohlik-db</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
 </project>

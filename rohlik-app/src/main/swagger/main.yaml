@@ -1,4 +1,4 @@
-swagger: "2.3.1"
+openapi: 3.0.1
 info:
   title: Demo pro Rohlik
   description: Ukol pro rohlik
@@ -10,39 +10,44 @@ paths:
     post:
       summary: Create new order
       description: Vytvori novou objednavku
-      responses:
-        '200':
-          description: Successful operation
+      operationId: createOrder
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/OrderTO'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
     delete:
-      summary: Delete product
       description: Smaze objednavku
+      operationId: deleteOrder
       parameters:
         - in: query
           name: id
           schema:
-            type: integer
-      responses:
-          '200':
-            description: Successful operation
-  /payment:
-    post:
-      summary: Payment of the order
-      description: Posle platbu za objednavku
+            type: long
+          description: Id objednavky, kterou chceme smazat
       responses:
         '200':
           description: Successful operation
+  /payment:
+    post:
+      summary: Payment of the order
+      description: Posle platbu za objednavku, prakticky jenom zmeni stav v DB
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Payment'
+              $ref: '#/components/schemas/PaymentTO'
+      responses:
+        '200':
+          description: Successful operation
   /product:
     post:
       summary: creation of the product
@@ -52,7 +57,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: '#/components/schemas/ProductTO'
+      responses:
+        '200':
+          description: Successful operation
     delete:
       summary: Delete product
       description: Smaze product
@@ -61,42 +69,51 @@ paths:
           description: Successful operation
       parameters:
         - in: query
-          name: id
+          name: name
           schema:
-            type: integer
-
-#    /getAll:
-#      get:
-#        summary: Cancel order
-#        description: Smaze objednavku
-#          parameters:
-#            - name: id
-#              in: path
-#              description: Order ID
-#              required: true
-#              schema:
-#                type: integer
-#                format: int64
-#            responses:
-#              '200':
-#                description: Successful operation
+            type: string
+          description: Jmeno produktu, ktery bude smazan
+  /product/getAll:
+    get:
+      summary: Get all product
+      description: Vrati vsechny produkty
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListProductsTO'
 components:
   schemas:
-    User:
+    OrderTO:
       properties:
-        id:
-          type: integer
-        name:
-          type: string
-      # Both properties are required
+        orderitems:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItemTO'
       required:
         - id
         - name
-    Payment:
+    ListProductsTO:
+      properties:
+        listProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductTO'
+    ProductTO:
+      properties:
+        name:
+          type: string
+        quantity:
+          type: integer
+    OrderItemTO:
+      properties:
+        name:
+          type: string
+        quantity:
+          type: integer
+    PaymentTO:
       properties:
         id:
-          type: integer
-    Product:
-      properties:
-        id:
-          type: integer
+          type: long

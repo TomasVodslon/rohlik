@@ -2,5 +2,8 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/rohlik-app/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rohlik-db/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rohlik-domain/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rohlik-service/src/main/java" charset="UTF-8" />
   </component>
 </project>

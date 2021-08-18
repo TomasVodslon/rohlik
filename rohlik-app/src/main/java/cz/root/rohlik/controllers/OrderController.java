@@ -1,22 +1,29 @@
 package cz.root.rohlik.controllers;
 
+import cz.root.rohlik.converters.MainConverter;
 import cz.root.rohlik.rest.OrderApi;
+import cz.root.rohlik.service.RohlikService;
+import cz.root.rohlik.transfer.OrderTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class OrderController implements OrderApi {
 
+    @Autowired
+    private RohlikService orderService;
+
     @Override
-    public ResponseEntity<Void> orderDelete() {
-        return null;
+    public ResponseEntity<String> createOrder(OrderTO order) {
+        Long newOrderId = orderService.createOrder(MainConverter.convertOrderToDomain(order));
+        return new ResponseEntity<>(String.valueOf(newOrderId), HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<Void> orderDelete(String id) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<Void> orderPost() {
-        return null;
+    public ResponseEntity<Void> deleteOrder(Long id) {
+        orderService.deleteOrder(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
