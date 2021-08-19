@@ -12,6 +12,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private ZonedDateTime createAt;
+    @Enumerated(EnumType.STRING)
     private OrderStatusEnum status;
 
     @OneToMany(mappedBy = "orderId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

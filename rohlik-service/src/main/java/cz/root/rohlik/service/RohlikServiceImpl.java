@@ -50,10 +50,7 @@ public class RohlikServiceImpl implements RohlikService {
 
     @Override
     public Long createOrder(OrderDomain domain) {
-        // TODO doplnit jeslti mame dost produktu na sklade
         Order entityOrder = new Order();
-        entityOrder.setCreateAt(ZonedDateTime.now());
-        entityOrder.setStatus(OrderStatusEnum.REGISTRED);
         for (OrderItemDomain orderItemDomain : domain.getItemDomainList()) {
             OrderItem orderItem = new OrderItem();
             orderItem.setOrderId(entityOrder);
@@ -61,6 +58,8 @@ public class RohlikServiceImpl implements RohlikService {
             orderItem.setProductQuantity(orderItemDomain.getProductQuantity());
             entityOrder.getOrderItemList().add(orderItem);
         }
+        entityOrder.setCreateAt(ZonedDateTime.now());
+        entityOrder.setStatus(OrderStatusEnum.REGISTRED);
         return orderRepository.save(entityOrder).getId();
     }
 
@@ -107,6 +106,19 @@ public class RohlikServiceImpl implements RohlikService {
                     productByName.setQuantity(productByName.getQuantity() + orderItem.getProductQuantity());
                 }
             }
+        }
+    }
+
+    @Override
+    public void validateNumberOfQuantity(OrderItem orderItem) {
+        Product productByName = productRepository.findProductByName(orderItem.getProductName());
+        if (productByName == null) {
+            throw new RuntimeException("Order with name " + orderItem.getProductName() + " not exist");
+        }
+
+        if (productByName.getQuantity() < orderItem.getProductQuantity()) {
+            throw new RuntimeException("Order with name " + orderItem.getProductName() + " isn’t enough quantity miss "
+                    + (orderItem.getProductQuantity() - productByName.getQuantity()));
         }
     }
 }

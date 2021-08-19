@@ -1,4 +1,5 @@
-// format logovani
-// validace
-// errorMessageTO
-//
+// format logovani a hlavne logovat request/response
+// validace requestu a jejich testy
+// mela by tam byt nejaka vlastni runtimeException, ktera by byla bohatsi a chyrejsi stejne tak jako ErrorMessageTO
+// poradne otestovani jobu
+// zatezove testy

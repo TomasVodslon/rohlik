@@ -43,4 +43,11 @@ public class MainConverter {
         }
         return new ResponseEntity<>(listProductsTO, HttpStatus.OK);
     }
+
+    public static OrderItem convertOrderItemToDomain(OrderItemTO orderItemTO) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setProductName(orderItemTO.getName());
+        orderItem.setProductQuantity(orderItemTO.getQuantity());
+        return orderItem;
+    }
 }

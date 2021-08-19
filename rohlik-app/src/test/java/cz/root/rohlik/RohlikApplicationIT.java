@@ -3,6 +3,7 @@ package cz.root.rohlik;
 import cz.root.rohlik.entity.Order;
 import cz.root.rohlik.entity.OrderItem;
 import cz.root.rohlik.entity.OrderStatusEnum;
+import cz.root.rohlik.entity.Product;
 import cz.root.rohlik.jpa.repository.OrderRepository;
 import cz.root.rohlik.jpa.repository.ProductRepository;
 import cz.root.rohlik.service.RohlikService;
@@ -25,6 +26,7 @@ import java.util.Optional;
 public class RohlikApplicationIT {
 
     public static final String HOUSKA = "houska";
+    public static final String ZBOZI_KTEREHO_JE_MALO = "zboziKterehoJeMalo";
     @LocalServerPort
     private int randomServerPort;
     private String localUri;
@@ -54,6 +56,33 @@ public class RohlikApplicationIT {
         Assertions.assertNotNull(first.get());
         Assertions.assertEquals(OrderStatusEnum.REGISTRED, orderFromDb.get().getStatus());
 
+    }
+
+    @Test
+    public void createOrderForNotExistProduct() {
+        OrderTO order = createOrderTO();
+        OrderItemTO notExistProduct = new OrderItemTO();
+        notExistProduct.setName("neexistuji");
+        notExistProduct.setQuantity(11);
+        order.getOrderitems().add(notExistProduct);
+        ErrorMessageTO errorMessageTO = restTemplate
+                .postForObject(localUri + "/order", order, ErrorMessageTO.class, (Object) null);
+        Assertions.assertNotNull(errorMessageTO);
+    }
+
+    @Test
+    public void createOrderWithnoutQuantity() {
+        Product product = new Product(ZBOZI_KTEREHO_JE_MALO, 6);
+        productRepository.save(product);
+        OrderTO order = createOrderTO();
+        OrderItemTO notExistProduct = new OrderItemTO();
+        notExistProduct.setName(ZBOZI_KTEREHO_JE_MALO);
+        notExistProduct.setQuantity(11);
+        order.getOrderitems().add(notExistProduct);
+        ErrorMessageTO errorMessageTO = restTemplate
+                .postForObject(localUri + "/order", order, ErrorMessageTO.class, (Object) null);
+        // TOHLE je celkove uz trochu narychlo
+        Assertions.assertNotNull(errorMessageTO);
     }
 
     @Test
@@ -112,9 +141,6 @@ public class RohlikApplicationIT {
         orderRepository.save(order);
 
         rohlikService.checkAllUnPaidOrders();
-
-
-
     }
 
     private OrderTO createOrderTO() {

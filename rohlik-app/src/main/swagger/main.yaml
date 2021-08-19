@@ -23,6 +23,12 @@ paths:
             text/plain:
               schema:
                 type: string
+        '5XX':
+          description: Unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessageTO'
     delete:
       description: Smaze objednavku
       operationId: deleteOrder
@@ -117,3 +123,7 @@ components:
       properties:
         id:
           type: long
+    ErrorMessageTO:
+      properties:
+        error:
+          type: string

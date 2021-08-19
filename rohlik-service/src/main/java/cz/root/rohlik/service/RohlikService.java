@@ -1,8 +1,8 @@
 package cz.root.rohlik.service;
 
 import cz.root.rohlik.domain.OrderDomain;
+import cz.root.rohlik.entity.OrderItem;
 import cz.root.rohlik.entity.Product;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -21,4 +21,6 @@ public interface RohlikService {
     void createProduct(Product product);
 
     void checkAllUnPaidOrders();
+
+    void validateNumberOfQuantity(OrderItem order);
 }
