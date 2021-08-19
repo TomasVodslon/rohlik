@@ -74,7 +74,7 @@ public class RohlikServiceImpl implements RohlikService {
         if (order.isPresent()) {
             order.get().setStatus(OrderStatusEnum.PAID);
         } else {
-            // TODO pokud neexistuje vratit chybu, ze je prijata platba pro neznamou objednavku
+            throw new RuntimeException("Order with name " + id + " not exist");
         }
     }
 

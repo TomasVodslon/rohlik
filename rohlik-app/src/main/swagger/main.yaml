@@ -54,6 +54,12 @@ paths:
       responses:
         '200':
           description: Successful operation
+        '5XX':
+          description: Unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessageTO'
   /product:
     post:
       summary: creation of the product
