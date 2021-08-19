@@ -23,7 +23,7 @@ import java.util.Optional;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class RohlikApplicationIT {
+public class RohlikApplicationTest {
 
     public static final String HOUSKA = "houska";
     public static final String ZBOZI_KTEREHO_JE_MALO = "zboziKterehoJeMalo";
